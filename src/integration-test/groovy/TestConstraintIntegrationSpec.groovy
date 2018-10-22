@@ -21,11 +21,13 @@ class TestConstraintIntegrationSpec extends Specification {
         // The number of errors increases exponentially with this, using the formula 2^(n-1)
         // This makes our application run out of memory and become unresponsive, since we can have hundreds of users.
         num.times { i ->
-            new User(
+            def user = new User(
                     organization: organization,
                     username: "user${i}@example.com",
                     channel: new Channel(organization: organization)
-            ).save(flush: true)
+            )
+            user.channel = new Channel(organization: organization, owner: user)
+            user.save(flush: true)
         }
 
         organization.refresh()
