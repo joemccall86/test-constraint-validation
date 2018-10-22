@@ -1,4 +1,4 @@
-import grails.test.mixin.integration.Integration
+import grails.testing.mixin.integration.Integration
 import grails.transaction.Rollback
 
 
@@ -36,6 +36,7 @@ class TestConstraintIntegrationSpec extends Specification {
         then:
         !organization.validate()
         organization.errors.errorCount != errorCount
+        organization.errors.errorCount == 1
 
         where:
         num | errorCount

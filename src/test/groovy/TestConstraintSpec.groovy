@@ -1,12 +1,17 @@
-import grails.test.mixin.Mock
+import grails.testing.gorm.DataTest
 import nest.validation.Channel
 import nest.validation.Organization
 import nest.validation.User
 import spock.lang.Specification
 import spock.lang.Unroll
 
-@Mock([Channel, Organization, User])
-class TestConstraintSpec extends Specification {
+class TestConstraintSpec extends Specification implements DataTest {
+
+    def setupSpec() {
+        mockDomain Organization
+        mockDomain User
+        mockDomain Channel
+    }
 
     @Unroll
     def '#num users do not generate #errorCount errors when only 1 user is invalid'() {
@@ -31,7 +36,8 @@ class TestConstraintSpec extends Specification {
 
         then:
         !organization.validate()
-        organization.errors.errorCount != 1
+        organization.errors.errorCount != 8
+        organization.errors.errorCount == 1
 
         where:
         num | errorCount

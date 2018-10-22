@@ -34,5 +34,3 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
 root(ERROR, ['STDOUT'])
-
-logger('grails.app.domain.nest.validation', DEBUG, ['STDOUT'], false)
